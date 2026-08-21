@@ -19,17 +19,6 @@ FPGA deployment is the next step (see [Deploying to hardware](#deploying-to-hard
 ## Quick start
 
 ```bash
-make            # runs both self-checking testbenches
-```
-
-```
-PASS  4045 cycles checked, 0 mismatches
-PASS  2042 cycles checked, 0 mismatches
-```
-
-Or individually:
-
-```bash
 iverilog -g2005 -o sim tb/tb_seq_detector.v rtl/seq_detector.v && vvp sim
 iverilog -g2005 -o sim tb/tb_lock_fsm.v     rtl/lock_fsm.v     && vvp sim
 ```
