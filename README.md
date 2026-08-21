@@ -48,7 +48,7 @@ Both designs take their target patterns from `rtl/config.vh`:
 `define PASSWORD  4'b0010    // Problem 2: 4-bit serial password
 ```
 
-The RTL is fully parameterised — changing these three values changes what the
+The RTL is fully parameterised - changing these three values changes what the
 designs detect without touching any state logic. The same three constants are
 mirrored at the top of each testbench; keep them in step.
 
@@ -80,9 +80,9 @@ docs/
 
 ---
 
-## Design 1 — dual non-overlapping sequence detector
+## Design 1 - dual non-overlapping sequence detector
 
-Detects two 4-bit patterns — a target and its reverse — anywhere in a serial
+Detects two 4-bit patterns - a target and its reverse - anywhere in a serial
 bit stream, and reports a match on the cycle the fourth bit arrives.
 
 **Non-overlap semantics.** Matching slides continuously: every new bit is
@@ -113,7 +113,7 @@ In the steady phase the history just shifts: `S_abc --d--> S_bcd`, a de Bruijn
 graph over three bits. The one exception is a hit, which sends the machine back
 to `S`.
 
-The tree and the shift are entirely independent of the target patterns — only
+The tree and the shift are entirely independent of the target patterns - only
 the output comparison uses them. That is why a different pattern pair needs no
 restructuring: exactly two cells in the transition table move.
 
@@ -125,7 +125,7 @@ Full table in [`docs/state_tables.md`](docs/state_tables.md).
 
 ---
 
-## Design 2 — Mealy digital lock
+## Design 2 - Mealy digital lock
 
 Detects a 4-bit serial password, unlocks on the final correct bit, and locks
 out after three consecutive failures.
@@ -164,7 +164,7 @@ whether a design is correct.
 
 The golden models are written at a deliberately different level of
 abstraction. The detector's reference is a shift register, a saturating
-counter and a comparison — no state enumeration at all, so an error in the
+counter and a comparison - no state enumeration at all, so an error in the
 FSM's tree, its shift transitions or its output decode cannot hide in both
 implementations. The lock's reference is a progress counter and an attempt
 counter written straight from the specification.
@@ -176,12 +176,12 @@ passes and tells you nothing.
 
 **Sampling discipline.** Stimulus is driven on the falling edge; Mealy outputs
 are sampled at the rising edge, where the state registers still hold their
-pre-edge values — the instant a Mealy output is defined for. Getting this
+pre-edge values - the instant a Mealy output is defined for. Getting this
 backwards produces an off-by-one that looks exactly like a broken FSM.
 
-**Stimulus.** Directed vectors first — both target patterns, near misses,
+**Stimulus.** Directed vectors first - both target patterns, near misses,
 back-to-back hits, matches deliberately placed at unaligned positions, the
-full three-strike lockout path, and reset recovery — followed by a random
+full three-strike lockout path, and reset recovery - followed by a random
 soak of several thousand bits.
 
 ---
@@ -201,7 +201,7 @@ original clock domain rather than generating a slow clock. Every register runs
 on the input clock and advances only when `tick` is high. This avoids a second
 clock domain, needs no additional timing constraints, and keeps static timing
 analysis meaningful. The `slow_clk` output toggles purely to drive a
-heartbeat LED and is never used as a clock — routing a divided clock through
+heartbeat LED and is never used as a clock - routing a divided clock through
 general fabric is the classic mistake in designs like this.
 
 Ports on `top_seq_detector`: `led[0]` serial input bit, `led[1]` detector
