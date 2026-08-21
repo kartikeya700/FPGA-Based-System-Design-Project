@@ -1,4 +1,4 @@
-# Sequence Detector & Mealy Digital Lock — Verilog RTL
+# Sequence Detector & Mealy Digital Lock - Verilog RTL
 
 Two finite-state-machine designs in Verilog-2001, verified with self-checking
 testbenches that compare each design against an independent golden model on
